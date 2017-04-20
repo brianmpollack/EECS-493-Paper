@@ -1,0 +1,96 @@
+\documentclass[10pt,journal]{IEEEtran}
+\usepackage[
+  backend=biber,
+  style=alphabetic,
+  citestyle=numeric
+]{biblatex}
+\addbibresource{citations.bib}
+\begin{document}
+\title{Capture and Replay Tools in the Field}
+\author{Deepa Chhetri and Brian Pollack}
+\maketitle
+
+\begin{abstract}
+TODO: Abstract
+\end{abstract}
+
+\section{Introduction}
+
+\IEEEPARstart{S}{oftware} testing is a process of  evaluating the software for its functionality by performing some test cases on an attribute or capability of a program or system and determining that it meets its required results. Software testing involves the execution of a software component or system component to evaluate one or more properties of interest. Testing the graphical user interface (GUI) of a software product is important to ensure the quality of the system and therefore to improve the user satisfaction of using the software\cite{Nedyalkova:2013:OSC:2494444.2494464}. But testing GUI is tedious and time consuming because it requires a sequence of user interactions. There are special tools available to test such software. These tools are called capture and replay tools. They capture a sequence of interactions which can be replayed at a later time for testing.
+
+\section{Previous Work}
+Nedyalkova and  Bernardino established a comparison of capture and replay tools. They evaluated five open source capture and replay tools namely Abbot, Jacareto, JFCUnit, Marathon and Pounder. The criteria that they used for comparison is divided into two major groups - ``General Characteristics'' and ``Capture/Replay Characteristics''. General characteristics include:
+\begin{enumerate}
+\item Easy to Install
+\item User Interface
+\item Easy to Use
+\item Easy to Launch Application Under Test (AUT)
+\item Documentation
+\item Tutorials
+\item Examples
+\item Programming Skills Required
+\end{enumerate}
+Capture/Replay Characteristics include:
+\begin{enumerate}
+\item Text Field - interaction with a JTextField
+\item Mouse Move - detection of mouse movements on a component
+\item Mouse Drag - detection of mouse drags
+\item Mouse Clicks - detection of mouse clicks
+\item Component - interaction with a window
+\item Scrolling - interaction with the scrollbar of a JTextArea
+\item File Dialog - navigating the directories in a JFileChooser
+\item Combo Box - selecting an item in a JComboBox
+\end{enumerate}
+Based on the results, they found out that Jacareto is the best tool among all five evaluated. Jacareto is easy to install, had better documentation, does not require additionally programming skills, supports all capture and replay characteristics except for navigation of dialog box. It allows tester to replay the test script in a speed that facilitates to observe the actions \cite{Nedyalkova:2013:OSC:2494444.2494464}.
+
+Similarly, Rodrigues et al. performed an empirical comparison to evaluate Capture/Replay (CR based) and Model-Based Performance (MBT) testing tools. They studied the effort required (time spent) to use CR-based and MBT tools. They compared LoadRunner and Visual Studio CR-based tools and the PLeTsPerf MBT tool to create performance test scripts and scenarios to test web applications. LoadRunner (LR) is a performance testing tool based on the CR technique that supports scripts generation and execution to test Web-based applications. Visual Studio (VS) [3] is an IDE developed by Microsoft to support software design, development and test. PLeTsPerf(PP) is a model-based performance testing tool. Rodrigues et al. used used an in-vitro approach, since it refers to the experiment in the laboratory under controlled conditions, addressing a real problem, i.e., the differences in individual effort to create performance test scripts and scenarios using LR,VS and PP. They performed the experiment to answer three research questions (RQ) - RQ1. What is the effort to generate a single performance test script and scenario using PP, LR, and VS? RQ2. What is the effort to re-generate performance test scripts and scenarios when using PP, LR, and VS? RQ3. What is the effort to generate a set of performance test scripts and scenarios using PP, LR, and VS? The experiment execution phase was split into three sessions, each composed of three tasks. These tasks were performed using the PP, LR  and VS approaches, one for each task, and all tasks should generate an equivalent performance test script as an output. They summarize the result by giving average time spent per treatment to complete each session. They found out that for simple testing tasks the effort of using CR-based tool was less than MBT tool but as the complexity of testing task increases the advantage of using MBT grows significantly \cite{Rodrigues:2014:ECR:2652524.2652587}.
+
+Mugshot is a deterministic capture and replay tool developed by Microsoft. It captures every event in  that is executed in JavaScript program which can be replayed deterministically at any later time to analyze the sequence of events that might have led to system failure. To capture application activity, it records all sources of nondeterminism. If an application is run again and injected with the same non deterministic events, the program will follow the same execution path that was observed at logging time. It has its client side implemented in JavaScript to easily record logs instead of downloading additional plug-ins. For each new event it captures, it creates a log entry that contains a sequence number and wall clock time. The entry also contains the event type and enough type-specific data to recreate event at play time. Mugshot uses a caching proxy to reproduce the load events in the log \cite{Mickens:2010:MDC:1855711.1855722}. This is the limitation of Mugshot. If an application fetches external contents that does not pass through the proxy, Mugshot cannot guarantee faithful replay of its data or its load time.
+
+\section{Description of Capture and Replay Tools Used}
+\subsection{Reanimator}
+Reanimator\footnote{https://github.com/WaterfallEngineering/reanimator} captures non-deterministic input to a JavaScript application in a log that can replayed at a later date. It was originally designed for recording web application crashes in the wild for later debugging. It is inspired by Microsoft’s Mugshot. It is built on JQuery 1.8.3. The code for Reanimator is available on GitHub and is under MIT license. It works only on Firefox. It supports both Windows and Linux platforms.
+
+\subsection{Sahi}
+Sahi\footnote{http://sahipro.com/} is an Automation testing tool that is used for testing web application. There are two versions of Sahi tool: one is open source and is available on SourceForge and proprietary version called Sahi Pro which is available on their official website. Open source comes with basic record and replay functionalities written in Java and JavaScript. It works on Internet Explorer, Firefox and Chrome. It only supports Windows platform.
+
+\subsection{Telerik}
+Telerik Test Studio\footnote{http://www.telerik.com/teststudio} is commercial windows-based software testing tool with Visual Studio plugins. It facilitates web and desktop (GUI) functional testing, performance testing and mobile app testing with Record and Replay features. It supports JavaScript, HTML, ASP.NET, Ajax, Silverlight etc and facilitates quick validations. It works on Internet Explorer, Firefox, Chrome and Safari.
+
+\subsection{Selenium IDE}
+Selenium IDE\footnote{http://www.seleniumhq.org/projects/ide/}: Selenium is known as umbrella project that enables web browser testing for all browsers. It is a open source free application supports GUI Testing and web functional testing. It is implemented as a Firefox extension, and allows recording, editing, and debugging tests. It includes the entire Selenium Core which allows easy and quick record and play back tests in the actual environment that they will run in. It supports both Windows and Linux platforms.
+
+\section{Evaluation of Existing Tools}
+We focused on capture and replay tools that are built for internet applications. Here, we compared four tools – Reanimator, Sahi, Telerik and Selenium IDE. The tools are installed on an HP laptop with Intel core i5 processor (2.30 GHz), 4 GB RAM and windows 8.1 operating system with Java 1.8. We installed the tools Sahi, Telerik and Selenium. The code for Reanimator was directly deployed on a web server we manage.
+The following criteria are used to establish comparison between these tools:
+\begin{enumerate}
+\item Easy to install
+\item Time required to install
+\item User interface
+\item Tutorials available
+\item Open source
+\item Programming skills required
+\item Documentation provided
+\item Examples provided
+\item User interface for developers
+\end{enumerate}
+Level of detail of measurements:
+\begin{enumerate}
+\item Interaction with text fields
+\item Mouse movements
+\item Mouse clicks
+\item Mouse drags
+\item Scrolling
+\item Dialog box
+\end{enumerate}
+System Information:
+\begin{enumerate}
+\item Size
+\item Platforms
+\item Browser support
+\item Additional features
+\end{enumerate}
+
+\printbibliography
+
+\end{document}
