@@ -1,10 +1,11 @@
-\documentclass[10pt,journal]{IEEEtran}
+\documentclass[12pt,journal]{IEEEtran}
 \usepackage[
   backend=biber,
-  style=alphabetic,
+  style=numeric,
   citestyle=numeric
 ]{biblatex}
 \addbibresource{citations.bib}
+\usepackage{pifont}
 \begin{document}
 \title{Capture and Replay Tools in the Field}
 \author{Deepa Chhetri and Brian Pollack}
@@ -90,6 +91,71 @@ System Information:
 \item Browser support
 \item Additional features
 \end{enumerate}
+
+
+\begin{table*}[b]
+\centering
+\begin{tabular}{ | c | c | c | c | c | }
+\hline
+Characteristic            & Reanimator  & Sahi  & Telerik & Selenium IDE \\
+\hline
+Easy to Install           & X & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Time Required to Install  & Very Quick & Quick & Very Long and Tedious & Quick \\
+\hline
+User Interface            & X & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Easy to Use               & X & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Documentaion              & X & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Tutorial                  & X & X & \ding{51} & \ding{51} \\
+\hline
+Open Source               & \ding{51} & \ding{51} & X & \ding{51} \\
+\hline
+Examples                  & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Programming Skills        & \ding{51} & X & X & X \\
+\hline
+
+\end{tabular}
+\caption{Caption.}
+\end{table*}
+
+\begin{table*}[b]
+\centering
+\begin{tabular}{ | c | c | c | c | c | }
+\hline
+Characteristic            & Reanimator  & Sahi  & Telerik & Selenium IDE \\
+\hline
+Mouse Click               & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Text Field                & X & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+Mouse Drags               & X & X & X & X \\
+\hline
+Mouse Move                & X & X & X & X \\
+\hline
+Scrolling                 & X & X & X & X \\
+\hline
+Dialog Box                & X & \ding{51} & \ding{51} & \ding{51} \\
+\hline
+
+\end{tabular}
+\caption{Caption.}
+\end{table*}
+
+\section{Comparison Analysis}
+All the tools are good at capturing and replaying task. But while taking other criteria into consideration, Sahi performs better than the other tools. It has very easy and quick installation. It has very well documentation and tutorials available online. It does not require any programming skill to use Sahi. Selenium also provides all these features but it can only be used to capture and replay Firefox sessions. It allows the user to set speed to analyse the scenarios. Telerik has a major setback that its installation takes very long (it took us 1 day to install) to finish since it requires lot of dependencies and also its installation process is not very effective. It requires large hard disk space. It has the feature called storyboard which is the snapshot of each scenario. Reanimator is a small capture and replay tool inspired by Mugshot. It requires programming skills since it does not come as ready to use testing tool. It is built on JQuery 1.8.3 and works only on Firefox. In our further work, we upgraded it to JQuery 3.2.0 and enabled it to work on Chrome too.
+
+\section{Extension and Modification of Reanimator}
+We forked the original Reanimator GitHub project at https://github.com/brianmpollack/reanimator. It took awhile to determine exactly how the original authors built Reanimator, but we were able to understand their work update their code to work with JQuery 3.2.0, the current version.
+
+While updating the Reanimator code, we learned why it did not initially work in Google Chrome. It appears that the original authors tried to convert DOM objects to JSON. It is commonly known that JSON does not support circular references, but DOM objects contain numerous circular references. Some browsers, such as Firefox, will simply proceed with the JSON encoding and dropped the circular references, but other browsers, such as Chrome, will terminate the JavaScript process. We found a simple function that will remove the circular references from the DOM object and convert it to JSON, allowing Reanimator to now be used in any major browser. It needs testing on browsers such as Internet Explorer and Edge, but it worked in our preliminary tests with Firefox, Chrome, and Safari.
+
+We also found a file error in the included demos. The original Makefile added a symbolic link to link the Reanimator JavaScript code to the demos, but the symbolic link caused issues both when all the code is uploaded to GitHub and even locally on my computer. For now, we simply copied the correct files into position on our web server, but we plan to update the Makefile to copy the files automatically. We are saving this for the end of the project because we anticipate having many changes to make to the demos (to reflect our new features/code), so we will update the demos all at once.
+
+
 
 \printbibliography
 
