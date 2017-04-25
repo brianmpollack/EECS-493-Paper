@@ -1,19 +1,23 @@
 \documentclass[12pt,journal]{IEEEtran}
-\usepackage[
-  backend=biber,
-  style=numeric,
-  citestyle=numeric
-]{biblatex}
-\addbibresource{citations.bib}
+\usepackage{biblatex}
+%[  backend=biber, style=numeric,  citestyle=numeric]
+%\usepackage{cite}
+\addbibresource{ref.bib}
+%\bibliography{ref}
+%\bibliographystyle{IEEEtran}
 \usepackage{pifont}
 \usepackage{caption}
 \usepackage{graphicx}
-\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{wrapfig,booktabs}
+\usepackage{authblk}
+\usepackage{biblatex}
 \captionsetup{justification=raggedright,singlelinecheck=false}
 \providecommand{\keywords}[1]{\textbf{Keywords} #1}
 \begin{document}
 \title{Capture and Replay Tools in the Field}
-\author{Deepa Chhetri and Brian Pollack}
+\author[1]{Deepa Chhetri}
+\author[1]{Brian Pollack}
+\affil[1]{Department of EECS, Case Western Reserve University}
 \maketitle
 
 \begin{abstract}
@@ -24,14 +28,14 @@ In GUI applications, a user interacts with the system via graphical interface su
 
 \section{Introduction}
 
-\IEEEPARstart{S}{oftware} testing is a process of  evaluating the software for its functionality by performing some test cases on an attribute or capability of a program or system and determining that it meets its required results. It involves the execution of a software component or system component to evaluate one or more properties of interest. Testing the graphical user interface (GUI) of a software product is important to ensure the quality of the system and therefore to improve the user experience\cite{Nedyalkova:2013:OSC:2494444.2494464}. It not only involves testing the GUI but also the functionality of system. But manual testing GUI is tedious and time consuming. GUI capture and replay tools was  developed as a mechanism for testing the correctness of interactive applications with graphical user interfaces. Using a capture and replay tool, a tester can run an application and record the entire interactive session. The tool records all the user's events, such as the keys pressed or the mouse movements, in a log file called test scripts. Given tets scripts, the tool can then automatically replay the exact same interactive session any number of times without requiring a human user. This helps in early detection of bugs that might lead to system failure and therefore speed up the process of development.\\
+\IEEEPARstart{S}{oftware} testing is a process of  evaluating the software for its functionality by performing some test cases on an attribute or capability of a program or system and determining that it meets its required results. It involves the execution of a software component or system component to evaluate one or more properties of interest. Testing the graphical user interface (GUI) of a software product is important to ensure the quality of the system and therefore to improve the user experience\cite{paper}. It not only involves testing the GUI but also the functionality of system. But manual testing GUI is tedious and time consuming. GUI capture and replay tools was  developed as a mechanism for testing the correctness of interactive applications with graphical user interfaces. Using a capture and replay tool, a tester can run an application and record the entire interactive session. The tool records all the user's events, such as the keys pressed or the mouse movements, in a log file called test scripts. Given tets scripts, the tool can then automatically replay the exact same interactive session any number of times without requiring a human user. This helps in early detection of bugs that might lead to system failure and therefore speed up the process of development.\\
 The advantages of using capture and replay tools is that it saves time by making the process easy and quick. They save the time of hand-coding test scripts. They also make it simple for testers without significant programming skills to automate their test case \cite{Memom}. However, these tools also have some drawbacks. They don’t generate test cases automatically; sometimes the recorded test scripts are inefficient and require manual intervention; the tools know only how to interact with widgets, but they have no idea what application they are operating on \cite{Silverstein}; in regression testing any change in the GUI may cause a test case to break or stop to execute against the updated version \cite{Memom}.\\
 In this paper we compare four capture and replay tools on different criteria. This comparison study will be helpful for the developers to choose the capture and replay tool that would be best fit for testing their applications. Further we extended Reanimator, an existing capture and replay tool, and enhanced it by adding functionality that will help web developers to actually use it in field.\\
  The remainder of this paper is organized as follows. Section 2 discusses about the previous work done in this field, Section 3 discusses about the tools that were used for the comparison, Section 4 decribes the evaluation criteria used to establish the comparison, Section 5 includes analysis of comparison, Section 6 describes in detail about the extension of Reanimator. Finally, in Section 7 we concluded the paper by presenting a short summary. 
  
 
 \section{Literature Review}
-Nedyalkova and  Bernardino \cite{comparison survey} established a comparison of capture and replay tools. They evaluated five open source capture and replay tools namely Abbot, Jacareto, JFCUnit, Marathon and Pounder. The criteria that they used for comparison is divided into two major groups - ``General Characteristics'' and ``Capture/Replay Characteristics''. General characteristics include:
+Nedyalkova and  Bernardino \cite{paper} established a comparison of capture and replay tools. They evaluated five open source capture and replay tools namely Abbot, Jacareto, JFCUnit, Marathon and Pounder. The criteria that they used for comparison is divided into two major groups - "General Characteristics'' and "Capture/Replay Characteristics''. General characteristics include:
 \begin{enumerate}
 \item Easy to Install
 \item User Interface
@@ -53,11 +57,11 @@ Capture/Replay Characteristics include:
 \item File Dialog - navigating the directories in a JFileChooser
 \item Combo Box - selecting an item in a JComboBox
 \end{enumerate}
-Based on the results, they found out that Jacareto is the best tool among all five evaluated. Jacareto is easy to install, had better documentation, does not require additional programming skills, supports all capture and replay characteristics except for navigation of dialog box. It allows tester to replay the test script in a speed that facilitates to observe the actions \cite{Nedyalkova:2013:OSC:2494444.2494464}.
+Based on the results, they found out that Jacareto is the best tool among all five evaluated. Jacareto is easy to install, had better documentation, does not require additional programming skills, supports all capture and replay characteristics except for navigation of dialog box. It allows tester to replay the test script in a speed that facilitates to observe the actions \cite{paper}.
 
-Similarly, Rodrigues et al.\cite{paper 2} performed an empirical comparison to evaluate Capture/Replay (CR based) and Model-Based Performance (MBT) testing tools. They studied the effort required (time spent) to use CR-based and MBT tools. They compared LoadRunner and Visual Studio CR-based tools and the PLeTsPerf MBT tool to create performance test scripts and scenarios to test web applications. LoadRunner (LR) is a performance testing tool based on the CR technique that supports scripts generation and execution to test Web-based applications. Visual Studio (VS) [3] is an IDE developed by Microsoft to support software design, development and test. PLeTsPerf(PP) is a model-based performance testing tool. Rodrigues et al. used used an in-vitro approach, since it refers to the experiment in the laboratory under controlled conditions, addressing a real problem, i.e., the differences in individual effort to create performance test scripts and scenarios using LR,VS and PP. They performed the experiment to answer three research questions (RQ) - RQ1. What is the effort to generate a single performance test script and scenario using PP, LR, and VS? RQ2. What is the effort to re-generate performance test scripts and scenarios when using PP, LR, and VS? RQ3. What is the effort to generate a set of performance test scripts and scenarios using PP, LR, and VS? The experiment execution phase was split into three sessions, each composed of three tasks. These tasks were performed using the PP, LR  and VS approaches, one for each task, and all tasks should generate an equivalent performance test script as an output. They summarize the result by giving average time spent per treatment to complete each session. They found out that for simple testing tasks the effort of using CR-based tool was less than MBT tool but as the complexity of testing task increases the advantage of using MBT grows significantly \cite{Rodrigues:2014:ECR:2652524.2652587}.
+Similarly, Rodrigues et al.\cite{paper2} performed an empirical comparison to evaluate Capture/Replay (CR based) and Model-Based Performance (MBT) testing tools. They studied the effort required (time spent) to use CR-based and MBT tools. They compared LoadRunner and Visual Studio CR-based tools and the PLeTsPerf MBT tool to create performance test scripts and scenarios to test web applications. LoadRunner (LR) is a performance testing tool based on the CR technique that supports scripts generation and execution to test Web-based applications. Visual Studio (VS) [3] is an IDE developed by Microsoft to support software design, development and test. PLeTsPerf(PP) is a model-based performance testing tool. Rodrigues et al. used used an in-vitro approach, since it refers to the experiment in the laboratory under controlled conditions, addressing a real problem, i.e., the differences in individual effort to create performance test scripts and scenarios using LR,VS and PP. They performed the experiment to answer three research questions (RQ) - RQ1. What is the effort to generate a single performance test script and scenario using PP, LR, and VS? RQ2. What is the effort to re-generate performance test scripts and scenarios when using PP, LR, and VS? RQ3. What is the effort to generate a set of performance test scripts and scenarios using PP, LR, and VS? The experiment execution phase was split into three sessions, each composed of three tasks. These tasks were performed using the PP, LR  and VS approaches, one for each task, and all tasks should generate an equivalent performance test script as an output. They summarize the result by giving average time spent per treatment to complete each session. They found out that for simple testing tasks the effort of using CR-based tool was less than MBT tool but as the complexity of testing task increases the advantage of using MBT grows significantly \cite{paper2}.
 
-Mugshot\cite{Mugshot} is a deterministic capture and replay tool developed by Microsoft. It captures every event that is executed in JavaScript program which can be replayed deterministically at any later time to analyze the sequence of events that might have led to system failure. To capture application activity, it records all sources of nondeterminism. If an application is run again and injected with the same non deterministic events, the program will follow the same execution path that was observed at logging time. It has its client side implemented in JavaScript to easily record logs instead of downloading additional plug-ins. For each new event it captures, it creates a log entry that contains a sequence number and wall clock time. The entry also contains the event type and enough type-specific data to recreate event at play time. Mugshot uses a caching proxy to reproduce the load events in the log \cite{Mickens:2010:MDC:1855711.1855722}. This is the limitation of Mugshot. If an application fetches external contents that does not pass through the proxy, Mugshot cannot guarantee faithful replay of its data or its load time.
+Mugshot\cite{paper4} is a deterministic capture and replay tool developed by Microsoft. It captures every event that is executed in JavaScript program which can be replayed deterministically at any later time to analyze the sequence of events that might have led to system failure. To capture application activity, it records all sources of nondeterminism. If an application is run again and injected with the same non deterministic events, the program will follow the same execution path that was observed at logging time. It has its client side implemented in JavaScript to easily record logs instead of downloading additional plug-ins. For each new event it captures, it creates a log entry that contains a sequence number and wall clock time. The entry also contains the event type and enough type-specific data to recreate event at play time. Mugshot uses a caching proxy to reproduce the load events in the log \cite{paper4}. This is the limitation of Mugshot. If an application fetches external contents that does not pass through the proxy, Mugshot cannot guarantee faithful replay of its data or its load time.
 
 \section{Description of Capture and Replay Tools Used}
 In this section, we give a short description of capture and replay tools used in this study. We focused on those capture and replay tools that are built for internet applications. Here, we compared four tools $-$ Reanimator, Sahi, Telerik and Selenium IDE. Following is the description of these tools:
@@ -145,9 +149,12 @@ While updating the Reanimator code, we learned why it did not initially work in 
 We also found a file error in the included demos. The original Makefile added a symbolic link to link the Reanimator JavaScript code to the demos, but the symbolic link caused issues both when all the code is uploaded to GitHub and even locally on my computer. For now, we simply copied the correct files into position on our web server, but we plan to update the Makefile to copy the files automatically. We are saving this for the end of the project because we anticipate having many changes to make to the demos (to reflect our new features/code), so we will update the demos all at once.
 
 
+\section{Conclusion}
+In our study, we compared four capture and replay tools, namely Reanimator, Sahi, Telerik and Selenium. The goal of this study was to determine the best tool among these which has best overall performance. These tools were compared on different criteria to find out which tool has reliable capture and replay capabilities without requiring too much human efforts. After evaluating each one of the tools, we came to a conclusion that the tool that best satisfies our requirements is Sahi. This tool stood out from rest of the tools as it has best overall performance. Therefore, we can say that Sahi can be easily adapted by any developer to test their GUI application. We also worked on Reanimator to enhance it by additing new functionalities to it. We enabled it to work on Chrome. We ...{to be added by Brian}
 
 
 
+%\bibliographystyle{IEEEtran}
 
 
 \printbibliography
