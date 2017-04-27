@@ -167,17 +167,40 @@ We updated the Makefile to copy the files into the demo folders. While we could 
 Originally, Reanimator was not very useful to developers in the field. As soon as a user closed his or her browser, any recorded log would be destroyed. To make Reanimator more useful to developers, the main feature we wanted to add was log uploading.
 
 \subsubsection{Client Side}
+We refer to the Reanimator JavaScript code as the client side because it is running locally on the web client’s machine. To enable log uploading, we modified the capture function in the core.js file. We added parameters so the user could pass in a boolean to enable uploading, and so the client could pass in a UUID to be associated with the log. A UUID, or Universally Unique Identifier, is a unique ID for the client. Generation and use of UUIDs is outlined in RFC 4122. \cite{p.leachm.meallingr.salz2005}
+\par
+The client, if log uploading is enabled, will upload the log to an HTTP POST service every five seconds. By default, we programmed Reanimator to POST to a file called reanimator.php in the same directory as the JavaScript file.
+\par
+We duplicated and extended the original tile game demo to support uploading to a webservice. A user can play the tile game, then can select a list of sessions from a dropdown. After selection, he or she can see any past game that was logged to the server.
 
 \subsubsection{Server Side}
+The server can be written any way the developer prefers as long as it accepts HTTP POST requests.
+\par
+We included a sample HTTP POST web service file in the dist directory of Reanimator. The simple script is written in PHP and will upload the logs to a MySQL database for retrieval later. It will overwrite any old logs with the same UUID.
+\par
+We also included a sample database configuration file with the uploading tile game demo. Because a developer should know how to setup a simple web service and MySQL server, we do not feel the need to explain them in detail.
 
 \section{Future Additions to Reanimator}
+In the future, we recommend adding more features to Reanimator. We believe that it is useful to developers after our additions, but could be improved further.
 
 \subsection{Developer Interface on Playback}
+We propose creating a developer interface, or developer portal. It would provide a user friendly way for developers to organize and replay their captured sessions. The interface could include a play/pause button, and let the developer choose the speed to play back the session.
+\par
+Because this does not add any core functionality, but rather an improved user experience, we recognize that it would help developers but we did not choose to implement it during our Reanimator extension/proof of usefulness test.
 
 \subsection{Synchronize Only Changes}
+Our demonstration implementation will upload the user's log every five seconds. The server code will simply overwrite the log data for that user in the database when it receives new data. This practice is fine for demo purposes and for small websites, but is obviously not scalable to large websites. We propose uploading only the changes of the log to the server.
+\par
+To ensure that data is not lost, we could allow the server to respond to the POST request to tell the client if the log upload was successful. The client would keep track of successful log pushes and would know if it needs to retry or if it can upload a new section of the log.
+\par
+This modification would appear small to each client, but would be a huge difference to large websites which could potentially be receiving many log pushes at the same time.
 
 \subsection{Smaller Upload Size}
-
+The log files that Reanimator generates are large relative to the usefull information that they contain. The files contain every piece of information about the layout of the webpage. We propose modifying the way that logs are stored. There will be one initial log with the entire DOM, but subsequent events will simply be a changelog of the original log file.
+\par
+This would make the entire log smaller, allowing for smaller uploads and less memory used at the client.
+\par
+It is important to note that this solution is different from the previous suggestion (synchronizing only the changes). The entire log would be much smaller, as it would only contain the changes to the original log file. We can combine this with the previous suggestion to further minimize the overhead of Reanimator.
 
 \section{Conclusion}
 In our study, we compared four capture and replay tools, namely Reanimator, Sahi, Telerik and Selenium. The goal of this study was to determine the best tool among these which has best overall performance. These tools were compared on different criteria to find out which tool has reliable capture and replay capabilities without requiring too much human efforts. After evaluating each one of the tools, we came to a conclusion that the tool that best satisfies our requirements is Sahi. This tool stood out from rest of the tools as it has best overall performance. Therefore, we can say that Sahi can be easily adapted by any developer to test their GUI application. We also worked on Reanimator to enhance it by additing new functionalities to it. We enabled it to work on Chrome. We ...{to be added by Brian}
