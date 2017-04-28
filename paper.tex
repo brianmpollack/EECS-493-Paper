@@ -14,13 +14,18 @@ citestyle=numeric]{biblatex}
 \providecommand{\keywords}[1]{\textbf{Keywords} #1}
 \begin{document}
 \title{Capture and Replay Tools in the Field}
-\author[1]{Deepa Chhetri}
-\author[1]{Brian Pollack}
-\affil[1]{Department of Electrical Engineering and Computer Science, Case Western Reserve University}
+%\author[1]{Deepa Chhetri}
+%\author[1]{Brian Pollack}
+%\affil[1]{Department of Electrical Engineering and Computer Science\\Case Western Reserve University\\Cleveland, OH 44106}
+
+\author{\IEEEauthorblockN{Deepa Chhetri\IEEEauthorrefmark{1}, Brian Pollack\IEEEauthorrefmark{2}}\\
+\IEEEauthorblockA{Department of Electrical Engineering and Computer Science\\Case Western Reserve University\\Cleveland, OH 44106\\\IEEEauthorrefmark{1}dxc496@case.edu, \IEEEauthorrefmark{2}bmp55@case.edu}
+}
+
 \maketitle
 
 \begin{abstract}
-In GUI applications, a user interacts with the system via graphical interface such as mouse click, scroll, drag, text box etc. There could be large number of possible sequences in which a user can interact. Testing such application means ensuring the correct sequence of interactions resulting in desired output. If this testing is done manually, it could be tedious. Therefore, capture and replay tools came into existence. It  enables the testers to record the entire ineteractive session and replaying it at any later time. By replaying a given log file on a changed version of the application, capture and replay tools thus support fully-automatic regression testing of graphical user interfaces.
+We compared four different capture and replay tools, mainly based on their performance and ease of use. We compared Reanimator, Sahi, Telerik, and Selenium IDE and determined that Sahi is overall the best capture and replay tool. Additionally, we extended Reanimator to fix core bugs, upgrade it to support JQuery 3.2.0 (the current version at time of writing), and enable it to upload its captures to a server. We believe that our extended version of Reanimator is now useful to JavaScript developers and can conveniently be used in the field.
 \end{abstract}
 
 \keywords\\{GUI testing; capture and replay tools; Reanimator}
