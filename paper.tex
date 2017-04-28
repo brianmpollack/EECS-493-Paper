@@ -36,7 +36,7 @@ In this paper we compare four capture and replay tools using different criteria.
 The remainder of this paper is organized as follows: Section 2 discusses previous research regarding the comparison of capture and replay tools; Section 3 summarizes each tool that was used for our comparison; Section 4 decribes the evaluation criteria used to establish the comparison; Section 5 describes the results of our analysis; Section 6 describes our modifications to Reanimator; Section 7 contains a summary of our work.
 
 \section{Literature Review}
-Nedyalkova and Bernardino established a comparison of capture and replay tools. They evaluated five open source capture and replay tools: Abbot, Jacareto, JFCUnit, Marathon, and Pounder. The criteria that they used for comparison is divided into two major groups - ``General Characteristics'' and ``Capture/Replay Characteristics''. General characteristics include:
+Nedyalkova and Bernardino \cite{Nedyalkova:2013:OSC:2494444.2494464} established a comparison of capture and replay tools. They evaluated five open source capture and replay tools: Abbot, Jacareto, JFCUnit, Marathon, and Pounder. The criteria that they used for comparison is divided into two major groups - ``General Characteristics'' and ``Capture/Replay Characteristics''. General characteristics include:
 \begin{enumerate}
 \item Easy to Install
 \item User Interface
@@ -58,17 +58,27 @@ Capture/Replay Characteristics include:
 \item File Dialog - navigating the directories in a JFileChooser
 \item Combo Box - selecting an item in a JComboBox
 \end{enumerate}
-Based on their analysis, Nedyalkova and Bernardino determined that Jacareto is the best tool among the five they evaluated. Jacareto is easy to install, had better documentation, does not require additional programming skills, and supports all capture and replay characteristics except for navigation of dialog box. Jacareto allows the tester to speed up or slow down the replay of the application log, helping make testing more efficient \cite{Nedyalkova:2013:OSC:2494444.2494464}.
+Based on their analysis, Nedyalkova and Bernardino determined that Jacareto is the best tool among the five they evaluated. Jacareto is easy to install, had better documentation, does not require additional programming skills, and supports all capture and replay characteristics except for navigation of dialog box. Jacareto allows the tester to speed up or slow down the replay of the application log, helping make testing more efficient .
 \par
-Similarly, Rodrigues et al. performed an empirical comparison to evaluate Capture/Replay (CR based) and Model-Based Performance (MBT) testing tools. They studied the effort required (time spent) to use both CR-based and MBT tools. They compared LoadRunner and Visual Studio, both CR-based tools, and the PLeTsPerf MBT tool to create performance test scripts and scenarios to test web applications. LoadRunner is a performance testing tool based on the CR technique that supports scripts generation and execution to test Web-based applications. Visual Studio is an IDE developed by Microsoft to support software design, development and test. PLeTsPerf is a model-based performance testing tool. Rodrigues et al. used used an in-vitro approach, since it refers to the experiment in the laboratory under controlled conditions, addressing a real problem, i.e., the differences in individual effort to create performance test scripts and scenarios using LoadRunner,VisualStudio and PLeTsPerf. They performed the experiment to answer three research questions:
+Similarly, Rodrigues et al. \cite{Rodrigues:2014:ECR:2652524.2652587} performed an empirical comparison to evaluate Capture/Replay (CR based) and Model-Based Performance (MBT) testing tools. They studied the effort required (time spent) to use both CR-based and MBT tools. They compared LoadRunner and Visual Studio, both CR-based tools, and the PLeTsPerf MBT tool to create performance test scripts and scenarios to test web applications. LoadRunner is a performance testing tool based on the CR technique that supports scripts generation and execution to test Web-based applications. Visual Studio is an IDE developed by Microsoft to support software design, development and test. PLeTsPerf is a model-based performance testing tool. Rodrigues et al. used used an in-vitro approach, since it refers to the experiment in the laboratory under controlled conditions, addressing a real problem, i.e., the differences in individual effort to create performance test scripts and scenarios using LoadRunner,VisualStudio and PLeTsPerf. They performed the experiment to answer three research questions:
 \begin{enumerate}
 \item What is the effort to generate a single performance test script and scenario using PLeTsPerf, LoadRunner, and VisualStudio?
 \item What is the effort to re-generate performance test scripts and scenarios when using PLeTsPerf, LoadRunner, and VisualStudio?
 \item What is the effort to generate a set of performance test scripts and scenarios using PLeTsPerf, LoadRunner, and VisualStudio?
 \end{enumerate}
-The experiment execution phase was split into three sessions, each composed of three tasks. These tasks were performed using the PLeTsPerf, LoadRunner  and VisualStudio approaches, one for each task, and all tasks should generate an equivalent performance test script as an output. They summarize the results by giving average time spent per treatment to complete each session. They determined that for simple testing tasks the effort of using CR-based tool was less than MBT tool but as the complexity of testing task increases the advantage of using MBT grows significantly \cite{Rodrigues:2014:ECR:2652524.2652587}.
+The experiment execution phase was split into three sessions, each composed of three tasks. These tasks were performed using the PLeTsPerf, LoadRunner  and VisualStudio approaches, one for each task, and all tasks should generate an equivalent performance test script as an output. They summarize the results by giving average time spent per treatment to complete each session. They determined that for simple testing tasks the effort of using CR-based tool was less than MBT tool but as the complexity of testing task increases the advantage of using MBT grows significantly .
 \par
-Mugshot is a deterministic capture and replay tool developed by Microsoft. It captures every event that is executed in JavaScript program which can be replayed deterministically at any later time to analyze the sequence of events that might have led to system failure. To capture application activity, it records all sources of nondeterminism. If an application is run again and injected with the same non deterministic events, the program will follow the same execution path that was observed at logging time. It has its client side implemented in JavaScript to easily record logs instead of downloading additional plug-ins. For each new event it captures, it creates a log entry that contains a sequence number and wall clock time. The entry also contains the event type and enough type-specific data to recreate event at play time. Mugshot uses a caching proxy to reproduce the load events in the log \cite{Mickens:2010:MDC:1855711.1855722}. This is the limitation of Mugshot. If an application fetches external contents that does not pass through the proxy, Mugshot cannot guarantee faithful replay of its data or its load time.
+Mugshot \cite{Mickens:2010:MDC:1855711.1855722} is a deterministic capture and replay tool developed by Microsoft. It captures every event that is executed in JavaScript program which can be replayed deterministically at any later time to analyze the sequence of events that might have led to system failure. To capture application activity, it records all sources of nondeterminism. If an application is run again and injected with the same non deterministic events, the program will follow the same execution path that was observed at logging time. It has its client side implemented in JavaScript to easily record logs instead of downloading additional plug-ins. For each new event it captures, it creates a log entry that contains a sequence number and wall clock time. The entry also contains the event type and enough type-specific data to recreate event at play time. Mugshot uses a caching proxy to reproduce the load events in the log . This is the limitation of Mugshot. If an application fetches external contents that does not pass through the proxy, Mugshot cannot guarantee faithful replay of its data or its load time.
+
+\par
+JARDIS \cite{paperA}, a time-traveling debugger for JavaScript. It is part of Microsoft’s ChakraCore JavaScript engine and a fork of the Node.js runtime environment . The overall system design is a record-replay-snapshot architecture. The snapshot algorithm is based on \cite{paperB} with the record-replay work done in the JsRT hosting API layer  that Node.js uses to interface with the JavaScript runtime. 
+It provides a rich set of functionality for recording and navigating the execution history of a program including: \\
+
+1.	Local Debuging and Offline Recording :  JARDIS also supports postmortem debugging. In this scenario, the developer runs their application under JARDIS’s record mode when deployed to their users, given their consent. When an error occurs, the execution trace is sent to the specified location for debugging later. The collected trace has sufficient information to replay the execution of the program exactly, including any non-determinism, and show the value of any JavaScript program variable that the developer might be interested in. Thus, the debugging experience is the same as if the developer had a debugger attached to the remote Node.js process when the trace was collected.\\
+2.	Reverse-Step Local and Dynamic operations : It allows the developer to step-back in time to the previously executed statement in the current function or to step-back in time to the previously executed statement in any frame including exception throws or callee returns.  There are two types of reverse-step opertaion. The first type of reverse-step operation is a reverse-step (rs) to the previously executed line in the current call frame. This is simply the reverse version of the forward step provided by existing graphical and command line debuggers. The second type of reverse operation is reverse-step dynamic (rsd) which acts as the reverse version of step-into operations in existing debuggers.This operation steps-back in time to the previously executed statement in any frame.\\
+3.	Reverse to Callback Origin operation : It reverses time to the line that registered the currently executing callback e.g. the call to setTimeout where the currently executing function was registered. 
+
+
 
 \section{Description of Capture and Replay Tools Used}
 In this section, we give a short description of capture and replay tools analyzed in this study. We focused on those capture and replay tools that are built for internet applications. Here, we compared four tools $-$ Reanimator, Sahi, Telerik and Selenium IDE:
@@ -97,8 +107,12 @@ $\bullet$ It helps the tester to enter commands more quickly.\\
 $\bullet$ It restricts the user from entering invalid commands.\\
 
 \section{Evaluation of Existing Tools}
-The four tools discussed in the previous section were installed on an HP laptop with Intel core i5 processor (2.30 GHz), 4 GB RAM and windows 8.1 operating system with Java 1.8. We installed the tools Sahi, Telerik and Selenium. The code for Reanimator was directly deployed on a web server we manage. Initially, to test these tools (except for Reanimator) a simple online calculator written in Javascript was deployed to one of our webservers. The demo code for Reanimator comes with a simple puzzle game.
+The four tools discussed in the previous section were installed on an HP laptop with Intel core i5 processor (2.30 GHz), 4 GB RAM and windows 8.1 operating system with Java 1.8. We installed the tools Sahi, Telerik and Selenium. The code for Reanimator was directly deployed on a web server we manage. Initially, to test these tools (except for Reanimator) a simple online calculator written in Javascript was deployed to one of our webservers. The demo code for Reanimator comes with a simple puzzle game that we used for its testing.
 \par
+We divided the criteria on which these tools are to be evaluated in three categories - \\
+1. Evaluation for ease of deployment - In this category, we tried to evaluate the tools on the basis of how easily these tools can be deployed and used redily.\\
+2. Ealuation for level of detail of measurements- In this category, we evaluated the functionality of the tools i.e. what all interactions the tool is capable of capturing.\\
+3. Additional system information - In this category, we provided the additional system information that might be needed by users to choose one of these tools according to their requirement.\\ 
 The following criteria are used to establish comparison between these tools:\\ \\
 \textbf{ \textit{Evaluation for ease of deployment:}}
 \begin{enumerate}
@@ -129,27 +143,28 @@ The following criteria are used to establish comparison between these tools:\\ \
 \item Additional features\\
 \end{enumerate}
 
-Table 1 shows the comparison between Reanimator, Sahi, Telerik  and Selenium based on criteria for evalution for ease of deployment. Table 2 shows the comparison based on criteria for evalution for level of detail of measurements. Table 3 shows the additiona system information provided with each tool. The symbol \ding{51} means that the tool provides the characteristic which is in evaluation and the symbol \ding{55} means that it doesn’t support it. \\
-
-\begin{figure}[h!]
- \hfill\includegraphics[width=9cm]{figures/table1.PNG}\hspace*{\fill}
-\end{figure}
-\begin{figure}[h!]
- \hfill\includegraphics[width=9cm]{figures/table2.PNG}\hspace*{\fill}
-\end{figure}
-
-\begin{figure}[h!]
- \hfill\includegraphics[width=9cm]{figures/table3.PNG}\hspace*{\fill}
-\end{figure}
-
 
 \section{Comparison Analysis}
 All of the tools we tested are at least functional: they capture interactive web sessions and successfully play them back at a later time. While taking all criteria into consideration, Sahi performs better overall than the other tools we tested.
+\begin{figure*}[h]
+\centering
+ \hfill\includegraphics[width=10cm]{figures/table1.PNG}\hspace*{\fill}
+\end{figure*}
+\begin{figure*}[h!]
+\centering
+ \hfill\includegraphics[width=10cm]{figures/table2.PNG}\hspace*{\fill}
+\end{figure*}
+
+\begin{figure*}[h!]
+\centering
+ \hfill\includegraphics[width=10cm]{figures/table3.PNG}\hspace*{\fill}
+\end{figure*}
 \par
-Compared to Telerik and Reanimator, Sahi has easier installation. It has strong documentation available online. It does not require any programming skill to use Sahi. Sahi supports Chrome, Firefox and Internet Explorer. Selenium is easiest to install as it comes as firefox plugin. It also provides all the features like Sahi but the greatest setback of selenium is that it can only be used to capture and replay Firefox sessions. It has a great feature that allows the user to set speed to analyse the scenarios. No other tool provides this feature and has their own replay speed. This makes the process of analysis cumbersome if the default speed is very fast or slow. Telerik has a major setback that its installation takes very long (it took us 1 day to install) to finish since it requires lot of dependencies and also its installation process is not very effective. It requires large hard disk space. It has the feature called visual storyboard which gives the snapshot of each scenario recorded by tool. This allows the developer to go to any snapshot. We used the one month free trial version of Telerik and requires to purchase once the trial period expires. Telerik also supports Chrome, Firefox and Internet Explorer. Reanimator is a small capture and replay tool inspired by Mugshot. It requires programming skills since it does not come as ready to use testing tool. It is built on JQuery 1.8.3. It requires programming skills to get Reanimator working.Also it works only on Firefox and Internet Explorer. It does not have any additional feauture.
+Compared to Telerik and Reanimator, Sahi has easier installation. It has strong documentation available online. It does not require any programming skill to use Sahi. Sahi supports Chrome, Firefox and Internet Explorer. Selenium is easiest to install as it comes as firefox plugin. It also provides all the features like Sahi but the greatest setback of selenium is that it can only be used to capture and replay Firefox sessions. It has a great feature that allows the user to set speed to analyse the scenarios. No other tool provides this feature and has their own replay speed. This makes the process of analysis cumbersome if the default speed is very fast or slow. Telerik despite being a great tool has some major issues.The biggest setback of Telerik is that its installation takes very long (it took us 1 day to install) to finish since it requires lot of dependencies and also its installation process is not very effective. It requires large hard disk space. It has the feature called visual storyboard which gives the snapshot of each scenario recorded by tool. This allows the developer to go to any snapshot to analyse the interaction. We used the one month free trial version of Telerik and requires to purchase once the trial period expires. Telerik also supports Chrome, Firefox and Internet Explorer. Reanimator is a very basic capture and replay tool inspired by Mugshot. It requires programming skills to get it working since it does not come as ready to use testing tool. It is built on JQuery 1.8.3. Also it works only on Firefox and Internet Explorer. It does not have any additional feauture like the other tools.
 \par
-Later, we talk about modifications we made to Reanimator that make it more functional and easier to use. We compared the four tools, however, as we found them directly from their authors. We did not compare our upgraded version of Reanimator during this test.
+Later, we talk about modifications we made to Reanimator that made it more functional and easier to use. We compared the four tools, however, as we found them directly from their authors. We did not compare our upgraded version of Reanimator during this test.
 \par
+Table 1 shows the comparison between Reanimator, Sahi, Telerik  and Selenium based on criteria for evalution for ease of deployment. Table 2 shows the comparison based on criteria for evalution for level of detail of measurements. Table 3 shows the additional system information provided with each tool. The symbol \ding{51} means that the tool provides the characteristic which is in evaluation and the symbol \ding{55} means that it doesn’t support it. \\
 Based on the evalution criteria seen in table 1, 2 and 3, we choose Sahi as the best tool among all others.
 
 
@@ -212,6 +227,9 @@ It is important to note that this solution is different from the previous sugges
 
 \section{Conclusion}
 In our study, we compared four capture and replay tools, namely Reanimator, Sahi, Telerik and Selenium. The goal of this study was to determine the best tool among these which has best overall performance. These tools were compared on different criteria to find out which tool has reliable capture and replay capabilities without requiring too much human efforts. After evaluating each one of the tools, we came to a conclusion that the tool that best satisfies our requirements is Sahi. This tool stood out from rest of the tools as it has best overall performance. Therefore, we can say that Sahi can be easily adapted by any developer to test their GUI application. We also worked on Reanimator to enhance it by additing new functionalities to it. We enabled it to work on Chrome. We ...{to be added by Brian}
+ 
+\section{Summary of Changes}
+We expanded our study of previous work done in the field of capture and replay. We studied "Time Travel Debugging for Javascript/Node.js". This is one of the latest work in this field that allows a developer to simply press a button to step-back in a program’s execution without having developer to manually stop debugging, set a new breakpoint, and then reproduce the desired execution to hit that breakpoint.
 
 
 
